@@ -1,0 +1,288 @@
+import pyautogui
+import time
+import keyboard
+
+import ctypes
+import time
+
+SendInput = ctypes.windll.user32.SendInput
+
+# C struct redefinitions
+PUL = ctypes.POINTER(ctypes.c_ulong)
+class KeyBdInput(ctypes.Structure):
+    _fields_ = [("wVk", ctypes.c_ushort),
+                ("wScan", ctypes.c_ushort),
+                ("dwFlags", ctypes.c_ulong),
+                ("time", ctypes.c_ulong),
+                ("dwExtraInfo", PUL)]
+
+class HardwareInput(ctypes.Structure):
+    _fields_ = [("uMsg", ctypes.c_ulong),
+                ("wParamL", ctypes.c_short),
+                ("wParamH", ctypes.c_ushort)]
+
+class MouseInput(ctypes.Structure):
+    _fields_ = [("dx", ctypes.c_long),
+                ("dy", ctypes.c_long),
+                ("mouseData", ctypes.c_ulong),
+                ("dwFlags", ctypes.c_ulong),
+                ("time",ctypes.c_ulong),
+                ("dwExtraInfo", PUL)]
+
+class Input_I(ctypes.Union):
+    _fields_ = [("ki", KeyBdInput),
+                 ("mi", MouseInput),
+                 ("hi", HardwareInput)]
+
+class Input(ctypes.Structure):
+    _fields_ = [("type", ctypes.c_ulong),
+                ("ii", Input_I)]
+
+# Actuals Functions
+
+def PressKey(hexKeyCode):
+    extra = ctypes.c_ulong(0)
+    ii_ = Input_I()
+    ii_.ki = KeyBdInput( 0, hexKeyCode, 0x0008, 0, ctypes.pointer(extra) )
+    x = Input( ctypes.c_ulong(1), ii_ )
+    ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
+
+def ReleaseKey(hexKeyCode):
+    extra = ctypes.c_ulong(0)
+    ii_ = Input_I()
+    ii_.ki = KeyBdInput( 0, hexKeyCode, 0x0008 | 0x0002, 0, ctypes.pointer(extra) )
+    x = Input( ctypes.c_ulong(1), ii_ )
+    ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
+
+# directx scan codes http://www.gamespp.com/directx/directInwwwwputKeyboardScanCodes.html
+
+
+def Recover():
+    print("Recovering...")
+    PU(0x0B)
+    PU(0x01)
+    time.sleep(1)
+    pyautogui.click(963, 728)
+    pyautogui.click(963, 728)
+    time.sleep(1)
+    print("aaa")
+    pyautogui.click(951, 621)
+    pyautogui.click(951, 621)
+    time.sleep(2)
+    pyautogui.click(448, 235)
+    pyautogui.click(448, 235)
+    time.sleep(1)
+    pyautogui.click(448, 235)
+    pyautogui.click(448, 235)
+    time.sleep(10)
+    pyautogui.rightClick(960, 580)
+    time.sleep(0.2)
+    pyautogui.click(886,260)
+    pyautogui.click(886, 260)
+    time.sleep(4)
+
+    PU(0x35)
+    PU(0x11)
+    PU(0x1E)
+    PU(0x13)
+    PU(0x19)
+
+    PU(0x39)
+
+    PU(0x22)
+    PU(0x1E)
+    PU(0x13)
+    PU(0x20)
+    PU(0x12)
+    PU(0x31)
+
+    PU(0x9C)
+
+    time.sleep(3)
+
+    #Walking time!
+
+    PressKey(0x11)
+    time.sleep(5)
+    ReleaseKey(0x11)
+
+    time.sleep(3)
+
+    PressKey(0x20)
+    time.sleep(7)
+    ReleaseKey(0x20)
+
+    PressKey(0x39)
+    time.sleep(0.1)
+    ReleaseKey(0x39)
+    time.sleep(0.15)
+    PressKey(0x39)
+    time.sleep(0.1)
+    ReleaseKey(0x39)
+
+    time.sleep(2)
+
+    PU(0x0B)
+
+
+
+def PU(One):
+    PressKey(One)
+    time.sleep(0.1)
+    ReleaseKey(One)
+
+def Go(way, Alloted):
+    if way == "left":
+        PressKey(0x11)
+        PressKey(0x1E)
+        time.sleep(Alloted)
+        ReleaseKey(0x1E)
+        ReleaseKey(0x11)
+    elif way == "right":
+        PressKey(0x20)
+        PressKey(0x11)
+        time.sleep(Alloted)
+        ReleaseKey(0x11)
+        ReleaseKey(0x20)
+
+def PreStore():
+    PU(0x0B)
+    PU(0x09)
+    time.sleep(1)
+    pyautogui.rightClick()
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    pyautogui.moveTo(816, 371)
+    pyautogui.click(816, 371)
+    time.sleep(0.2)
+    PU(0x12)
+    time.sleep(1)
+    PU(0x0A)
+    time.sleep(1)
+    pyautogui.rightClick()
+    time.sleep(1)
+    pyautogui.moveTo(1176, 331)
+    pyautogui.click(1176, 331)
+    time.sleep(1)
+    pyautogui.moveTo(815, 407)
+    pyautogui.click(815, 407)
+    time.sleep(3)
+    Checklers = pyautogui.locateCenterOnScreen("mutantstack.png", confidence=0.8, region=(631, 596, 1286, 916))
+    if Checklers:
+        if Checklers[1] > 570:
+            time.sleep(0.1)
+            PressKey(0x2A)
+            pyautogui.click(Checklers)
+            pyautogui.click(Checklers)
+            ReleaseKey(0x2A)
+            time.sleep(0.1)
+
+    Checklers2 = pyautogui.locateCenterOnScreen("mutantstack.png", confidence=0.8, region=(631, 596, 1286, 916))
+    if Checklers2:
+        if Checklers2[1] > 570:
+            time.sleep(0.1)
+            PressKey(0x2A)
+            pyautogui.click(Checklers2)
+            pyautogui.click(Checklers2)
+            ReleaseKey(0x2A)
+            time.sleep(0.1)
+
+    Checklers3 = pyautogui.locateCenterOnScreen("condensedferm.png", confidence=0.9, region=(631, 596, 1286, 916))
+    if Checklers3:
+        if Checklers3[1] > 570:
+            time.sleep(0.1)
+            PressKey(0x2A)
+            pyautogui.click(Checklers3)
+            pyautogui.click(Checklers3)
+            ReleaseKey(0x2A)
+            time.sleep(0.1)
+    Checklers4 = pyautogui.locateCenterOnScreen("condensedferm.png", confidence=0.9, region=(631, 596, 1286, 916))
+    if Checklers4:
+        if Checklers4[1] > 570:
+            time.sleep(0.1)
+            PressKey(0x2A)
+            pyautogui.click(Checklers4)
+            pyautogui.click(Checklers4)
+            ReleaseKey(0x2A)
+            time.sleep(0.1)
+
+
+    PU(0x12)
+    PU(0x04)
+    PU(0x0B)
+
+TotalCounter = 0
+time.sleep(5)
+counter = 0
+
+while True:
+    time.sleep(2)
+    Checka2 = pyautogui.locateCenterOnScreen("coppas.png", confidence=0.8)
+    print(Checka2)
+    if not Checka2:
+        Recover()
+        counter = 0
+    Checka3 = pyautogui.locateCenterOnScreen("lockedplot.png", confidence=0.7)
+    if Checka3:
+        Recover()
+        counter = 0
+
+    TotalCounter += 1
+    counter += 1
+    if counter == 1:
+        print("going right")
+        Go("right", 125)
+    if counter == 2:
+        print("going left")
+        Go("left", 125)
+    if counter == 3:
+        print("going right")
+        Go("right", 125)
+    if counter == 4:
+        print("going left")
+        Go("left", 125)
+    if counter == 5:
+        print("going right")
+        Go("right", 125)
+        #PreStore()
+        counter = 0
+    print("")
+    print("")
+    print("")
+    print("")
+    print("Estimated Income:")
+    print(TotalCounter * 315560)
+    print("Running seconds:")
+    print(TotalCounter * 129)
+
+#130 boot speed
+#9723993.69 an hour
